@@ -1,0 +1,17 @@
+#!/bin/sh
+
+exec 2>/dev/null
+
+# needed for click
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+
+# needed for ncurses
+export TERM=linux
+
+# note: we use long timeout to keep into account that there could be a small queue
+timeout -k1 --foreground 180 stdbuf -i0 -o0 -e0 socat - exec:"/biooosless/x.py server",pty
+if [ $? -ne 0 ]
+then
+  echo "killed"
+fi
